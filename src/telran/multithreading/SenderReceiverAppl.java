@@ -20,7 +20,7 @@ public class SenderReceiverAppl {
 		
 		sender.join();
 		stopReceivers(receivers);
-		displayResult();
+		displayResult(); 
 		
 		
 
