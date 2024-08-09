@@ -42,19 +42,18 @@ public class SenderReceiverAppl {
 
 	private static ConsumerReceiver[] startReceivers(BlockingQueue<String> oddMessageBox, BlockingQueue<String> evenMessageBox,
 			int nReceivers) {	
-		ConsumerReceiver[] receivers = 
-		IntStream.range(0, nReceivers).mapToObj(i -> {
-			ConsumerReceiver receiver = new ConsumerReceiver();
-			if (i % 2 == 0) {
-				receiver.setMessageBox(evenMessageBox);
-			} else {
-				receiver.setMessageBox(oddMessageBox);
-			}
-			return receiver;
-		}).toArray(ConsumerReceiver[]::new);
-		Arrays.stream(receivers).forEach(ConsumerReceiver::start);
+		ConsumerReceiver[] receivers = IntStream.range(0, nReceivers)
+				.mapToObj(i -> {
+					ConsumerReceiver receiver = new ConsumerReceiver();
+					receiver.setMessageBox(i % 2 == 0 ? evenMessageBox : oddMessageBox);
+					receiver.start(); 
+					return receiver;
+				})
+				.toArray(ConsumerReceiver[]::new);
+
 		return receivers;
 	}
+
 
 	private static ProducerSender startSender(BlockingQueue<String> oddMessageBox, BlockingQueue<String> evenMessageBox,
 			int nMessages) {
