@@ -29,6 +29,6 @@ public class ConsumerReceiver extends Thread {
 		
 	}
 	public static long getMessagesCounter() {
-		return messagesCounter.get();
+		return messagesCounter.get(); 
 	}
 }
