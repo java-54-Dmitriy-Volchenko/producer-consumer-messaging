@@ -7,7 +7,7 @@ public class ProducerSender extends Thread {
 	private final BlockingQueue<String> oddMessageBox;
 	private final int nMessages;
 
-	public ProducerSender(BlockingQueue<String> evenMessageBox, BlockingQueue<String> oddMessageBox, int nMessages) {
+	public ProducerSender(BlockingQueue<String> oddMessageBox, BlockingQueue<String> evenMessageBox,  int nMessages) {
 		this.evenMessageBox = evenMessageBox;
 		this.oddMessageBox = oddMessageBox;
 		this.nMessages = nMessages;

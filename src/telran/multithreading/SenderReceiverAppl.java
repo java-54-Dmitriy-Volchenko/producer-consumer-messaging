@@ -46,12 +46,13 @@ public class SenderReceiverAppl {
 		IntStream.range(0, nReceivers).mapToObj(i -> {
 			ConsumerReceiver receiver = new ConsumerReceiver();
 			receiver.start(); 
+			
 			if (receiver.getId() % 2 == 0) {
-				receiver.setMessageBox(oddMessageBox);
-			} else {
 				receiver.setMessageBox(evenMessageBox);
+			} else {
+				receiver.setMessageBox(oddMessageBox);
 			}
-
+			
 			return receiver;
 		}).toArray(ConsumerReceiver[]::new);
 
