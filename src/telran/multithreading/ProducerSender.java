@@ -1,31 +1,35 @@
 package telran.multithreading;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.stream.IntStream;
 
 public class ProducerSender extends Thread {
-	private final BlockingQueue<String> evenMessageBox;
-	private final BlockingQueue<String> oddMessageBox;
-	private final int nMessages;
-
-	public ProducerSender(BlockingQueue<String> oddMessageBox, BlockingQueue<String> evenMessageBox,  int nMessages) {
-		this.evenMessageBox = evenMessageBox;
-		this.oddMessageBox = oddMessageBox;
+	//HW #44 definition
+	//dispatching functionality
+	//two message boxes
+	//even messages should be put to even message box
+	//odd messages should be put to odd message box
+	private BlockingQueue<String> messageBoxEven;
+	private BlockingQueue<String> messageBoxOdd;
+	private int nMessages;
+	
+	public ProducerSender(BlockingQueue<String> messageBoxEven, BlockingQueue<String> messageBoxOdd, int nMessages) {
+		this.messageBoxEven = messageBoxEven;
+		this.messageBoxOdd = messageBoxOdd;
 		this.nMessages = nMessages;
 	}
 
-	@Override
 	public void run() {
-		for (int i = 1; i <= nMessages; i++) {
+		IntStream.rangeClosed(1, nMessages)
+		.forEach(i -> {
 			try {
-				String message = "Message " + i;
-				if (i % 2 == 0) {
-					evenMessageBox.put(message);
-				} else {
-					oddMessageBox.put(message);
-				}
+				BlockingQueue<String> messageBox = null;
+				messageBox = i % 2 == 0 ? messageBoxEven : messageBoxOdd;
+				messageBox.put("message" + i);
 			} catch (InterruptedException e) {
 				//no interrupt logics
 			}
-		}
+		});
 	}
+	
 }
